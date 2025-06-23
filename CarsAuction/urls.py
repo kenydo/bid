@@ -16,9 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from polls import views
+from auctions import views
+from django.conf import settings
+from django.conf.urls.static import static
 #! The above code imports the necessary modules for URL routing in a Django project.
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('polls.urls')),  # Include URLs from the polls app
+    path('', include('auctions.urls')),  # Include URLs from the auctions app
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
