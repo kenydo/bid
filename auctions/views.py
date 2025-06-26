@@ -6,19 +6,25 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.contrib.auth.models import User
 
 def register(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, f'Contul a fost creat cu succes pentru {username}!')
-            return redirect('login')  # sau orice altă pagină după înregistrare
-    else:
-        form = UserCreationForm()
-    return render(request, 'auctions/register.html', {'form': form})
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        password2 = request.POST.get("password2")
+        if not username or not password or not password2:
+            messages.error(request, "Toate câmpurile sunt obligatorii!")
+        elif password != password2:
+            messages.error(request, "Parolele nu coincid!")
+        elif User.objects.filter(username=username).exists():
+            messages.error(request, "Acest username există deja!")
+        else:
+            User.objects.create_user(username=username, password=password)
+            messages.success(request, f"Contul a fost creat cu succes pentru {username}!")
+            return redirect("login") 
 
+    return render(request, "auctions/register.html")
 def login_page(request):
     if request.method == 'POST':
         username = request.POST.get('username')
