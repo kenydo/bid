@@ -1,0 +1,19 @@
+{% extends "auctions/main.html" %}
+
+{% block title %}Lista Licitații{% endblock %}
+
+{% block content %}
+  <h2>Licitații active</h2>
+  <ul class="list-group">
+    {% for auction in auctions %}
+      <li class="list-group-item">
+        <a href="{% url 'auction_detail' auction.id %}">
+          {{ auction.car.name }} - Preț de pornire: {{ auction.car.price }} lei
+        </a>
+        <span class="badge bg-primary float-end">Până la: {{ auction.end_time|date:"d.m.Y H:i" }}</span>
+      </li>
+    {% empty %}
+      <li class="list-group-item">Nu există licitații active.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

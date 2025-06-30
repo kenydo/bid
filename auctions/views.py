@@ -7,6 +7,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.shortcuts import redirect ,get_object_or_404, render
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
 
 def register(request):
     if request.method == "POST":
@@ -32,7 +34,7 @@ def login_page(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return HttpResponse("Login successful!")
+            return redirect("home")
         else:
             return HttpResponse("Invalid credentials.")
     return render(request,'auctions/login.html' )
@@ -43,44 +45,44 @@ def home(request):
 def main_page (request):
     return render(request, 'main.html')
 
-def bids(request):
-    auctions = Auction.objects.filter(is_active=True,end_time__gt=timezone.now()).order_by('-end_time')
-    return render(request, 'auctions/bids.html')
 
 def car_detail(request, car_id):
     car = Car.objects.get(id=car_id)
     bids = Bid.objects.filter(car=car)
     return render(request, 'car_detail.html', {'car': car, 'bids': bids})
 
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib import messages
-
-def place_bid(request, car_id):
+def place_bid(request, auction_id):
+    auction = get_object_or_404(Auction, id=auction_id)
+    car = auction.car
     if request.method == 'POST':
-        car = get_object_or_404(Car, id=car_id)
-        amount = request.POST.get('amount')
-        if amount:
-            bid = Bid(car=car, user=request.user, amount=amount)
-            bid.save()
-            messages.success(request, "Bid placed successfully!")
-            auction = Auction.objects.filter(car=car, is_active=True).first()
-            if auction is not None:
-                return redirect('auction_detail', auction_id=auction.id)
-            else:
-                return redirect('cars')
-        else:
-            messages.error(request, "Invalid bid amount.")
-            auction = Auction.objects.filter(car=car, is_active=True).first()
-            if auction is not None:
-                return redirect('auction_detail', auction_id=auction.id)
-            else:
-                return redirect('cars')
-    return HttpResponse("Method not allowed.")
+        try:
+            amount = float(request.POST.get('amount'))
+        except (TypeError, ValueError):
+            messages.error(request, "Suma introdusă nu este validă.")
+            return redirect('auction_detail', auction_id=auction.id)
+        # Bid minim: cel mai mare bid curent sau prețul de pornire, +0.01
+        existing_bids = Bid.objects.filter(car=car).order_by('-amount')
+        min_bid = float(car.price)
+        if existing_bids.exists():
+            latest_bid = existing_bids.first()
+            min_bid = float(latest_bid.amount) + 0.01 if latest_bid else float(car.price)
+        if amount < min_bid:
+            messages.error(request, f"Bid-ul minim este {min_bid} lei.")
+            return redirect('auction_detail', auction_id=auction.id)
+        Bid.objects.create(car=car, user=request.user, amount=amount)
+        messages.success(request, "Bid-ul tău a fost plasat!")
+        return redirect('auction_detail', auction_id=auction.id)
+    return redirect('auction_detail', auction_id=auction.id)
 
 def auction_detail(request, auction_id):
-    auction = Auction.objects.get(id=auction_id)
-    bids = Bid.objects.filter(car=auction.car)
-    return render(request, 'auction_detail.html', {'auction': auction, 'bids': bids})
+    auction = get_object_or_404(Auction, id=auction_id)
+    # Poți filtra și ordona bid-urile descrescător după sumă sau după dată
+    bids = Bid.objects.filter(car=auction.car).order_by('-amount')
+    return render(request, "auctions/auction_detail.html", {
+        "auction": auction,
+        "bids": bids,
+    })
+
 
 def create_auction(request):
     if request.method == 'POST':
@@ -100,3 +102,8 @@ def create_car(request):
         car.save()
         return redirect('main_page') 
     return render(request, 'auctions/add_car.html')
+
+@login_required
+def my_bids(request):
+    bids = Bid.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'auctions/my_bids.html', {'bids': bids})
