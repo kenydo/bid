@@ -74,13 +74,20 @@ def place_bid(request, auction_id):
         return redirect('auction_detail', auction_id=auction.id)
     return redirect('auction_detail', auction_id=auction.id)
 
+def auction_list(request):
+    auctions = Auction.objects.all()
+    return render(request, 'auctions/auction_list.html', {'auctions': auctions})
+
+
 def auction_detail(request, auction_id):
     auction = get_object_or_404(Auction, id=auction_id)
     # Poți filtra și ordona bid-urile descrescător după sumă sau după dată
     bids = Bid.objects.filter(car=auction.car).order_by('-amount')
-    return render(request, "auctions/auction_detail.html", {
+    cars = Car.objects.all()
+    return render(request, "auctions/auction_list.html", {
         "auction": auction,
         "bids": bids,
+        "cars": cars
     })
 
 
