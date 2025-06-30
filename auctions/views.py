@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from django.shortcuts import redirect
+from django.shortcuts import redirect ,get_object_or_404, render
 from django.contrib.auth.models import User
 
 def register(request):
@@ -43,25 +43,38 @@ def home(request):
 def main_page (request):
     return render(request, 'main.html')
 
-def auction_list(request):
+def bids(request):
     auctions = Auction.objects.filter(is_active=True,end_time__gt=timezone.now()).order_by('-end_time')
-    return render(request, 'auction_list.html', {'auctions': auctions})
+    return render(request, 'auctions/bids.html')
 
 def car_detail(request, car_id):
     car = Car.objects.get(id=car_id)
     bids = Bid.objects.filter(car=car)
     return render(request, 'car_detail.html', {'car': car, 'bids': bids})
 
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
+
 def place_bid(request, car_id):
     if request.method == 'POST':
-        car = Car.objects.get(id=car_id)
+        car = get_object_or_404(Car, id=car_id)
         amount = request.POST.get('amount')
         if amount:
             bid = Bid(car=car, user=request.user, amount=amount)
             bid.save()
-            return HttpResponse("Bid placed successfully!")
+            messages.success(request, "Bid placed successfully!")
+            auction = Auction.objects.filter(car=car, is_active=True).first()
+            if auction is not None:
+                return redirect('auction_detail', auction_id=auction.id)
+            else:
+                return redirect('cars')
         else:
-            return HttpResponse("Invalid bid amount.")
+            messages.error(request, "Invalid bid amount.")
+            auction = Auction.objects.filter(car=car, is_active=True).first()
+            if auction is not None:
+                return redirect('auction_detail', auction_id=auction.id)
+            else:
+                return redirect('cars')
     return HttpResponse("Method not allowed.")
 
 def auction_detail(request, auction_id):
@@ -85,6 +98,5 @@ def create_car(request):
         image = request.FILES.get('image')
         car = Car(name=name, description=description, price=price, image=image)
         car.save()
-        return HttpResponse("Car created successfully!")
-    return HttpResponse("Method not allowed.")
-
+        return redirect('main_page') 
+    return render(request, 'auctions/add_car.html')

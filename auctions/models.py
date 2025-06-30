@@ -31,6 +31,7 @@ class Auction(models.Model):
     start_time = models.DateTimeField(default=timezone.now)
     end_time = models.DateTimeField()
     is_active = models.BooleanField(default=True)
+    id = models.AutoField(primary_key=True)
 
     def __str__(self):
         return f"Auction for {self.car.name} from {self.start_time} to {self.end_time}"     

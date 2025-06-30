@@ -1,0 +1,35 @@
+{% extends "main.html" %}
+{% block content %}
+    <h2>Licitație pentru: {{ auction.car.name }}</h2>
+    <img src="{{ auction.car.image.url }}" style="max-width:300px;">
+    <p><b>Descriere:</b> {{ auction.car.description }}</p>
+    <p><b>Preț de pornire:</b> {{ auction.car.price }} lei</p>
+    <p><b>Licitația se încheie la:</b> {{ auction.end_time }}</p>
+    <hr>
+    <h3>Bid-uri:</h3>
+    {% if bids %}
+        <ul>
+        {% for bid in bids %}
+            <li>
+                <b>{{ bid.user.username }}</b> a licitat 
+                <b>{{ bid.amount }} lei</b> 
+                ({{ bid.created_at|date:"Y-m-d H:i" }})
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nu există încă niciun bid.</p>
+    {% endif %}
+    <hr>
+    {% if user.is_authenticated %}
+        <h3>Pune un nou bid</h3>
+        <form method="post" action="{% url 'place_bid' auction.car.id %}">
+            {% csrf_token %}
+            <input type="number" name="amount" step="0.01" min="{{ auction.car.price }}" placeholder="Suma ta" required>
+            <button type="submit">Pune bid</button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'login' %}">Loghează-te</a> ca să poți licita.</p>
+    {% endif %}
+    <p><a href="{% url 'cars' %}">&larr; Înapoi la lista de licitații</a></p>
+{% endblock %}
