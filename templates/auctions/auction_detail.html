@@ -1,4 +1,4 @@
-{% extends "auctions/main.html" %}
+{% extends "main.html" %}
 
 {% block title %}Licitație: {{ auction.car.name }}{% endblock %}
 
@@ -43,7 +43,7 @@
                  min="{{ bids.0.amount|default:auction.car.price }}"
                  class="form-control"
                  required
-                 placeholder="Suma ta (minim {{ bids.0.amount|default:auction.car.price }} lei)">
+                 placeholder="Suma ta (minim {{ bids.0.amount|default:auction.car.price }} euro)">
         </div>
         <button type="submit" class="btn btn-success">Licitează</button>
       </form>
@@ -57,6 +57,6 @@
   {% endif %}
 
   <div class="mt-3">
-    <a href="{% url 'auctions' %}">&larr; Înapoi la lista licitațiilor</a>
+    <a href="{% url 'auction_list' %}">&larr; Înapoi la lista licitațiilor</a>
   </div>
 {% endblock %}

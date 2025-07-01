@@ -1,0 +1,16 @@
+{% extends "main.html" %}
+{% block content %}
+  <h2>Adaugă o licitație nouă</h2>
+  <form method="post">
+    {% csrf_token %}
+    <label for="car_id">Alege mașina:</label>
+    <select name="car_id" id="car_id" class="form-control" required>
+      {% for car in cars %}
+        <option value="{{ car.id }}">{{ car.name }} ({{ car.price }} lei)</option>
+      {% endfor %}
+    </select>
+    <br>
+    <button type="submit" class="btn btn-primary">Creează licitația</button>
+  </form>
+  <p><a href="{% url 'auction_list' %}">&larr; Înapoi la licitații</a></p>
+{% endblock %}

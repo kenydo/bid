@@ -15,16 +15,13 @@ class Car(models.Model):
         return self.name
 
 class Bid(models.Model):
-    if User is None:
-        raise ValueError("User must be provided for the bid.")
-    else:
         car = models.ForeignKey(Car, related_name='bids', on_delete=models.CASCADE)
         user = models.ForeignKey(User, on_delete=models.CASCADE)
-        amount = models.DecimalField(max_digits=10, decimal_places=2)
-        created_at = models.DateTimeField(default=timezone.now)
+        amount = models.FloatField()
+        created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"{self.user.username} - {self.amount} on {self.car.name}"
+        def __str__(self):
+            return f"{self.user.username} - {self.amount} on {self.car.name}"
 
 class Auction(models.Model):
     car = models.ForeignKey(Car, related_name='auctions', on_delete=models.CASCADE)

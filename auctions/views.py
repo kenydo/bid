@@ -9,7 +9,6 @@ from django.shortcuts import redirect ,get_object_or_404, render
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-
 def register(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -51,6 +50,7 @@ def car_detail(request, car_id):
     bids = Bid.objects.filter(car=car)
     return render(request, 'car_detail.html', {'car': car, 'bids': bids})
 
+@login_required
 def place_bid(request, auction_id):
     auction = get_object_or_404(Auction, id=auction_id)
     car = auction.car
@@ -81,23 +81,26 @@ def auction_list(request):
 
 def auction_detail(request, auction_id):
     auction = get_object_or_404(Auction, id=auction_id)
-    # Poți filtra și ordona bid-urile descrescător după sumă sau după dată
     bids = Bid.objects.filter(car=auction.car).order_by('-amount')
-    cars = Car.objects.all()
-    return render(request, "auctions/auction_list.html", {
+    return render(request, "auctions/auction_detail.html", {
         "auction": auction,
         "bids": bids,
-        "cars": cars
     })
 
-
+@login_required
 def create_auction(request):
+    cars = Car.objects.all()
     if request.method == 'POST':
-        car = Car.objects.get(id=request.POST.get('car_id'))
-        auction = Auction(car=car, start_time=timezone.now(), end_time=timezone.now() + timezone.timedelta(days=7))
-        auction.save()
-        return HttpResponse("Auction created successfully!")
-    return HttpResponse("Method not allowed.")
+        car_id = request.POST.get('car_id')
+        car = Car.objects.get(id=car_id)
+        auction = Auction.objects.create(
+            car=car,
+            start_time=timezone.now(),
+            end_time=timezone.now() + timezone.timedelta(days=7),
+            is_active=True  # dacă ai câmpul acesta
+        )
+        return redirect('auction_list')
+    return render(request, 'auctions/add_auction.html', {'cars': cars})
 
 def create_car(request):
     if request.method == 'POST':
