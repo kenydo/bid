@@ -60,8 +60,7 @@ def place_bid(request, auction_id):
         except (TypeError, ValueError):
             messages.error(request, "Suma introdusă nu este validă.")
             return redirect('auction_detail', auction_id=auction.id)
-        # Bid minim: cel mai mare bid curent sau prețul de pornire, +0.01
-        existing_bids = Bid.objects.filter(car=car).order_by('-amount')
+        existing_bids = Bid.objects.filter(auction=auction).order_by('-amount')
         min_bid = float(car.price)
         if existing_bids.exists():
             latest_bid = existing_bids.first()
@@ -69,7 +68,7 @@ def place_bid(request, auction_id):
         if amount < min_bid:
             messages.error(request, f"Bid-ul minim este {min_bid} lei.")
             return redirect('auction_detail', auction_id=auction.id)
-        Bid.objects.create(car=car, user=request.user, amount=amount)
+        Bid.objects.create(auction=auction, car=car, user=request.user, amount=amount)
         messages.success(request, "Bid-ul tău a fost plasat!")
         return redirect('auction_detail', auction_id=auction.id)
     return redirect('auction_detail', auction_id=auction.id)
