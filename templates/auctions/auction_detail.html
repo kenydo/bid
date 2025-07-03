@@ -4,13 +4,31 @@
 
 {% block content %}
   <h2>{{ auction.car.name }}</h2>
- {% if auction.car.images.all %}
-  <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-    {% for img in auction.car.images.all %}
-      <img src="{{ img.image.url }}" alt="Imagine {{ auction.car.name }}" style="max-width: 200px; border-radius: 4px;">
-    {% endfor %}
-  </div>
-{% endif %} 
+
+  {% if auction.car.images.all %}
+    <div id="carCarousel" class="carousel slide" data-bs-ride="carousel" style="max-width:400px;">
+      <div class="carousel-inner">
+        {% for img in auction.car.images.all %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <img src="{{ img.image.url }}" class="d-block w-100" alt="Imagine {{ auction.car.name }}">
+          </div>
+        {% endfor %}
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  {% elif auction.car.image %}
+    <img src="{{ auction.car.image.url }}" alt="Imagine {{ auction.car.name }}" style="max-width: 400px;">
+  {% else %}
+    <span style="color: #888;">Fără imagini</span>
+  {% endif %}
+
   <p><strong>Descriere:</strong> {{ auction.car.description }}</p>
   <p><strong>Preț de pornire:</strong> {{ auction.car.price }} lei</p>
   <p><strong>Licitația se termină la:</strong> <span class="badge bg-warning text-dark">{{ auction.end_time|date:"d.m.Y H:i" }}</span></p>
@@ -47,9 +65,9 @@
                  min="{{ bids.0.amount|default:auction.car.price }}"
                  class="form-control"
                  required
-                 placeholder="Suma ta (minim {{ bids.0.amount|default:auction.car.price }} euro)">
+                 placeholder="Suma ta (minim {{ bids.0.amount|default:auction.car.price }} lei)">
         </div>
-        <button type="submit" class="btn btn-success">Licitează</button>
+        <button type="submit" class="btn btn-success">Licitază</button>
       </form>
     {% else %}
       <div class="alert alert-secondary mt-3">
