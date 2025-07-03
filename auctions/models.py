@@ -33,3 +33,8 @@ class Bid(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.amount} on {self.car.name}"
+
+class CarImage(models.Model):
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='media/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)

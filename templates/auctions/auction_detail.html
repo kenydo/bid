@@ -4,9 +4,13 @@
 
 {% block content %}
   <h2>{{ auction.car.name }}</h2>
-  {% if auction.car.image %}
-    <img src="{{ auction.car.image.url }}" alt="Imagine {{ auction.car.name }}" class="img-fluid mb-3" style="max-width: 400px;">
-  {% endif %}
+ {% if auction.car.images.all %}
+  <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+    {% for img in auction.car.images.all %}
+      <img src="{{ img.image.url }}" alt="Imagine {{ auction.car.name }}" style="max-width: 200px; border-radius: 4px;">
+    {% endfor %}
+  </div>
+{% endif %} 
   <p><strong>Descriere:</strong> {{ auction.car.description }}</p>
   <p><strong>Preț de pornire:</strong> {{ auction.car.price }} lei</p>
   <p><strong>Licitația se termină la:</strong> <span class="badge bg-warning text-dark">{{ auction.end_time|date:"d.m.Y H:i" }}</span></p>

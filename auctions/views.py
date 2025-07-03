@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Auction, Car, Bid
+from .models import Auction, Car, Bid ,CarImage
 from django.utils import timezone
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
@@ -8,7 +8,6 @@ from django.contrib import messages
 from django.shortcuts import redirect ,get_object_or_404, render
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-
 def register(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -106,9 +105,11 @@ def create_car(request):
         name = request.POST.get('name')
         description = request.POST.get('description')
         price = request.POST.get('price')
-        image = request.FILES.get('image')
-        car = Car(name=name, description=description, price=price, image=image)
+        car = Car(name=name, description=description, price=price)
         car.save()
+        images = request.FILES.getlist('images')
+        for image in images:
+            CarImage.objects.create(car=car, image=image)
         return redirect('main_page') 
     return render(request, 'auctions/add_car.html')
 
