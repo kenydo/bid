@@ -1,0 +1,44 @@
+body {
+  background-color: #232946; /* Fundal închis */
+}
+h1 {
+  color: #eebbc3; /* Text deschis */
+  text-align: center; /* Centrare text */
+  font-family: Arial, sans-serif; /* Font simplu */
+}
+.navbar {
+  border: 2px solid #333; /* Chenarul */
+  border-radius: 8px; /* Colțuri rotunjite */
+  padding: 10px 20px; /* Spațiu interior */
+  background-color: #f9f9f9; /* Fundal deschis */
+  width: fit-content; /* Dimensiune cât conținutul */
+  margin: 20px auto; /* Centrare */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Umbră fină */
+}
+
+.navbar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex; /* Meniu orizontal */
+  gap: 15px; /* Spațiu între linkuri */
+}
+
+.navbar li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.navbar li a:hover {
+  background-color: #ddd;
+}
+
+.container {
+  width: 820px;
+  margin: 0 auto;
+  text-align: center;
+}

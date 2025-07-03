@@ -1,25 +1,36 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>main page</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
   </head>
   <body>
     <header>
-      <h3>My Website</h3>
-      <nav>
+      <h1>Welcome to the home page</h1>
+      <nav class="navbar">
         <ul>
           <li><a href="/main_page">Main Page</a></li>
           <li><a href="/login">Login</a></li>
           <li><a href="/register">Register</a></li>
         </ul>
       </nav>
-    <h1>Welcome to the home page</h1>
-    <p>asta nuj inca ce trb sa fie</p>
-
-    <footer>
-      <p>&copy; 2023 Your Company</p>
-    </footer>
+    </header>
   </body>
 </html>
+<img />
+<div class="container">
+  <h2>Welcome to Samsareala</h2>
+  <p>Your one-stop solution for all your needs.</p>
+  <img
+    src="{% static 'Poza.png' %}"
+    alt="Samsareala Logo"
+    height="400px"
+    width="800px"
+  />
+</div>
+<footer>
+  <p>&copy; Samsareala.ro</p>
+</footer>
