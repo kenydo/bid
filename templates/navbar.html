@@ -4,43 +4,42 @@
 <head>
   <title>Car Auction</title>
   <link rel="stylesheet" href="{% static 'stylesnav.css' %}" />
-  <script src="https://unpkg.com/feather-icons"></script>
 
 {%block navbar %}
 
 <nav class="navbar">
   <ul class="navbar__menu">
     <li class="navbar__item">
-      <a href="{% url 'home' %}" class="navbar__link"
-        ><i data-feather="home"></i><span>Home Page</span></a
-      >
+      <a href="{% url 'home' %}" class="navbar__link">
+        <i data-feather="home"></i><span></span></a>
+      
     </li>
     <li class="navbar__item">
-      <a href="{% url 'login' %}" class="navbar__link"
-        ><i data-feather="users"></i><span>Login</span></a
-      >
+      <a href="{% url 'login' %}" class="navbar__link">Login</a>
+      
     </li>
     <li class="navbar__item">
-      <a href="{% url 'bids' %}" class="navbar__link"
-        ><i data-feather="bids"></i><span>Bids</span></a
-      >
+      <a href="{% url 'register' %}" class="navbar__link">Register</a>
+
     </li>
     <li class="navbar__item">
-      <a href="{% url 'register' %}" class="navbar__link"
-        ><i data-feather="register"></i><span>Register</span></a
-      >
+      <a href="{% url 'bids' %}" class="navbar__link">Bids</a>
+
+  
     </li>
     <li class="navbar__item">
-      <a href="{% url 'add_car' %}" class="navbar__link"
-        ><i data-feather="car"></i><span>Add Car</span></a
-      >
+      <a href="{% url 'add_car' %}" class="navbar__link">Add Car</a>
+        
     </li>
         </li>
     <li class="navbar__item">
-      <a href="{% url 'auction_list' %}" class="navbar__link"
-        ><i data-feather="register"></i><span>Licitatii</span></a
-      >
+      <a href="{% url 'auction_list' %}" class="navbar__link">Licitatii</a>
+       
     </li>
   </ul>
 </nav>
+  <script src="https://unpkg.com/feather-icons"></script>
+<script>
+  feather.replace();
+</script>
 {% endblock %}

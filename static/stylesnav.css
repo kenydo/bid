@@ -54,3 +54,12 @@
     margin: 8px 0;
   }
 }
+.navbar__link svg {
+  stroke: #eebbc3; /* culoarea iconiței */
+  width: 30px; /* poți ajusta dimensiunea */
+  height: 30px;
+}
+
+.navbar__link:hover svg {
+  stroke: black;
+}
