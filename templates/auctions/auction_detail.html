@@ -5,28 +5,35 @@
 {% block content %}
   <h2>{{ auction.car.name }}</h2>
 
-  {% if auction.car.images.all %}
-    <div id="carCarousel" class="carousel slide" data-bs-ride="carousel" style="max-width:400px;">
+{% if auction.car.images.all %}
+    <div id="carCarousel" class="carousel slide mb-3" data-bs-ride="carousel" style="max-width:400px;">
       <div class="carousel-inner">
         {% for img in auction.car.images.all %}
           <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            <img src="{{ img.image.url }}" class="d-block w-100" alt="Imagine {{ auction.car.name }}">
+            <img src="{{ img.image.url }}" class="d-block w-100" style="max-height:320px;object-fit:contain;" alt="Imagine {{ auction.car.name }}">
           </div>
         {% endfor %}
       </div>
+      {% if auction.car.images.all|length > 1 %}
       <button class="carousel-control-prev" type="button" data-bs-target="#carCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="carousel-control-prev-icon"></span>
         <span class="visually-hidden">Previous</span>
       </button>
       <button class="carousel-control-next" type="button" data-bs-target="#carCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="carousel-control-next-icon"></span>
         <span class="visually-hidden">Next</span>
       </button>
+      {% endif %}
     </div>
-  {% elif auction.car.image %}
-    <img src="{{ auction.car.image.url }}" alt="Imagine {{ auction.car.name }}" style="max-width: 400px;">
-  {% else %}
-    <span style="color: #888;">Fără imagini</span>
+    <div id="thumbnails" class="d-flex flex-row gap-2 mb-4">
+    {% for img in auction.car.images.all %}
+      <img src="{{ img.image.url }}"
+           class="img-thumbnail thumbnail-img {% if forloop.first %}thumb-active{% endif %}"
+           data-bs-slide-to="{{ forloop.counter0 }}"
+           style="width: 60px; height: 60px; object-fit: cover; cursor:pointer;"
+           alt="Thumbnail {{ forloop.counter }}">
+    {% endfor %}
+  </div>
   {% endif %}
 
   <p><strong>Descriere:</strong> {{ auction.car.description }}</p>
