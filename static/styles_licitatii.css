@@ -1,0 +1,55 @@
+/* Container centrat și spațiat */
+.auction-container {
+  max-width: 850px;
+  margin: 0 auto;
+  background-color: #f2f4f8;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+/* Card elegant pentru lista de licitații */
+.auction-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Item din listă cu hover */
+.auction-item {
+  background-color: #ffffff;
+  border-bottom: 1px solid #eee;
+  padding: 14px 16px;
+  border-radius: 6px;
+  transition: background-color 0.25s ease;
+}
+
+.auction-item:hover {
+  background-color: #f9f9f9;
+}
+
+/* Link licitație */
+.auction-link {
+  text-decoration: none;
+  color: #212529;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.auction-link:hover {
+  color: #0d6efd;
+}
+
+/* Badge */
+.badge {
+  font-size: 0.85rem;
+  padding: 8px 14px;
+  background: linear-gradient(135deg, #0d6efd, #4dabf7);
+  color: white;
+  border-radius: 30px;
+}
+
+/* Centrare generală */
+.text-center {
+  text-align: center;
+}

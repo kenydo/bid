@@ -1,5 +1,9 @@
-{% extends "main.html" %} {% block title %}Lista Licitații{% endblock %}
+{% extends "main.html" %}
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'styles_licitatii.css' %}" />
+{% block title %}Lista Licitații{% endblock %}
+
 <h2>Licitații active</h2>
 
 <a href="{% url 'create_auction' %}" class="btn btn-success mb-3"
@@ -20,6 +24,30 @@
   {% endfor %}
 </ul>
 <li class="list-group-item">
-    <a href="{% url 'main_page' %}">Pagina principală</a>
+  <a href="{% url 'main_page' %}">Pagina principală</a>
+</li>
+{% endblock %} 
+{% block content2 %}
+<h2>Licitații active</h2>
+
+<a href="{% url 'create_auction' %}" class="btn btn-success mb-3"
+  >Adaugă licitație nouă</a
+>
+<ul class="list-group">
+  {% for auction in auctions %}
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <a href="{% url 'auction_detail' auction.id %}" class="fw-bold">
+      {{ auction.car.name }} - Preț de pornire: {{ auction.car.price }} euro
+    </a>
+    <span class="badge bg-primary">
+      Până la: {{ auction.end_time|date:"d.m.Y H:i" }}
+    </span>
   </li>
+  {% empty %}
+  <li class="list-group-item">Nu există licitații active.</li>
+  {% endfor %}
+</ul>
+<li class="list-group-item">
+  <a href="{% url 'main_page' %}">Pagina principală</a>
+</li>
 {% endblock %}
