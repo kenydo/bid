@@ -1,6 +1,5 @@
 {% extends "main.html" %} {% block content %} {% load static %}
 <link rel="stylesheet" href="{% static 'styles_licitatii.css' %}" />
-
 <h2>Licitații active</h2>
 <div class="text-center">
 <a href="{% url 'create_auction' %}" class="btn btn-success mb-3"
@@ -22,7 +21,6 @@
 </ul>
 {% endblock %} {% block content2 %}
 <h2>Licitații active</h2>
-
 <a href="{% url 'create_auction' %}" class="btn btn-success mb-3"
   >Adaugă licitație nouă</a
 >

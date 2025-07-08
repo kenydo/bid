@@ -41,7 +41,7 @@ def home(request):
     return render(request, 'home.html',) 
 # This view function handles requests to the auctions index page and returns a simple HTTP response.
 def main_page (request):
-    return render(request, 'main.html')
+    return render(request, 'main_page.html',{'main_page':True})
 
 
 def car_detail(request, car_id):
