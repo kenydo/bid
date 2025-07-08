@@ -1,8 +1,5 @@
-{% extends "main.html" %}
-{% block content %}
-{% load static %}
+{% extends "main.html" %} {% block content %} {% load static %}
 <link rel="stylesheet" href="{% static 'styles_licitatii.css' %}" />
-{% block title %}Lista Licitații{% endblock %}
 
 <h2>Licitații active</h2>
 
@@ -23,8 +20,7 @@
   <li class="list-group-item">Nu există licitații active.</li>
   {% endfor %}
 </ul>
-{% endblock %} 
-{% block content2 %}
+{% endblock %} {% block content2 %}
 <h2>Licitații active</h2>
 
 <a href="{% url 'create_auction' %}" class="btn btn-success mb-3"
@@ -45,4 +41,3 @@
   {% endfor %}
 </ul>
 {% endblock %}
- 
