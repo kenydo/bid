@@ -27,8 +27,9 @@
       rel="stylesheet"
     />
     <script src="{% static 'app.js' %}"></script>
-  </body>
-</html>
-{% block extra_js %}
+    {% block extra_js %}
 <script src="{% static 'searchbar.js' %}"></script>
 {% endblock %}
+  </body>
+</html>
+
