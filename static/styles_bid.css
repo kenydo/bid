@@ -1,50 +1,73 @@
-body { background: #232946 !important; }
-
-.list-group {
-  background: magenta !important;
-  border-radius: 14px !important;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.07) !important;
-  padding: 20px !important;
-  max-width: 700px;
-  margin: 0 auto 28px auto;
-  border: 1px solid #E4E9F0 !important;
+body {
+  background: #232946 !important;
 }
-/* Fiecare bid */
+.list-group {
+  max-width: 850px;
+  margin: 0 auto 20px auto;
+  background-color: #EEBBC3 !important;
+  border-radius: 12px !important;
+  border: 1px solid #EEBBC3 !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
+  padding: 20px !important;
+}
+/* Card elegant pentru lista de licitații */
 .list-group-item {
-  background: black !important;
+  background: #fff !important;
   border: none !important;
-  border-bottom: 1px solid #E3E8EF !important;
-  border-radius: 7px !important;
-  padding: 16px 20px !important;
-  transition: background 0.17s;
-  font-size: 1.08rem !important;
-  color: #212529 !important;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  border-bottom: 1px solid #eee !important;
+  padding: 14px 16px !important;
+  border-radius: 6px !important;
+  transition: background-color 0.25s ease !important;
 }
 .list-group-item:last-child {
   border-bottom: none !important;
 }
+/* Hover efect pe item */
 .list-group-item:hover {
-  background: #E9F2FF !important;
+  background-color: #7E87D3 !important;
 }
-/* Numele mașinii și suma bold */
-.list-group-item strong {
-  font-weight: 600 !important;
-  color: #122C91 !important;
+/* Link licitație */
+.list-group-item .fw-bold,
+.list-group-item a {
+  text-decoration: none !important;
+  color: #212529 !important;
+  font-weight: 500 !important;
+  transition: color 0.2s ease !important;
 }
-/* Data și ora din dreapta, stilizată subtil */
-.list-group-item .text-muted,
-.list-group-item small {
-  color: #8898AA !important;
-  font-size: 0.98em !important;
+.list-group-item .fw-bold:hover,
+.list-group-item a:hover {
+  color: #0D6EFD !important;
 }
-/* Titlu centrat */
+/* Badge */
+.badge.bg-primary,
+.badge.bg-success,
+.badge.bg-warning,
+.badge.bg-info,
+.badge {
+  font-size: 0.85rem !important;
+  padding: 8px 14px !important;
+  background: linear-gradient(135deg, #4976BA, #2D5575) !important;
+  color: #EEBBC3 !important;
+  border-radius: 30px !important;
+}
+/* Centrare generală */
+.text-center {
+  text-align: center !important;
+}
 h2 {
   text-align: center;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   color: white !important;
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 600;
+}
+.btn-centru {
+  display: block;
+  width: fit-content;
+  margin: 0 auto 20px auto;
+  background-color: green;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
 }
