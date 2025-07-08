@@ -1,7 +1,9 @@
+body { background: #232946 !important; }
+
 .list-group {
   max-width: 850px;
   margin: 0 auto 20px auto;
-  background-color: #0f53dc !important;
+  background-color: orange !important;
   border-radius: 12px !important;
   border: 1px solid #e0e0e0 !important;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
@@ -57,4 +59,12 @@
 /* Centrare generală */
 .text-center {
   text-align: center !important;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: white !important;
+  font-size: 1.75rem;
+  font-weight: 600;
 }

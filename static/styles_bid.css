@@ -1,0 +1,50 @@
+body { background: #232946 !important; }
+
+.list-group {
+  background: magenta !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07) !important;
+  padding: 20px !important;
+  max-width: 700px;
+  margin: 0 auto 28px auto;
+  border: 1px solid #E4E9F0 !important;
+}
+/* Fiecare bid */
+.list-group-item {
+  background: black !important;
+  border: none !important;
+  border-bottom: 1px solid #E3E8EF !important;
+  border-radius: 7px !important;
+  padding: 16px 20px !important;
+  transition: background 0.17s;
+  font-size: 1.08rem !important;
+  color: #212529 !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.list-group-item:last-child {
+  border-bottom: none !important;
+}
+.list-group-item:hover {
+  background: #E9F2FF !important;
+}
+/* Numele mașinii și suma bold */
+.list-group-item strong {
+  font-weight: 600 !important;
+  color: #122C91 !important;
+}
+/* Data și ora din dreapta, stilizată subtil */
+.list-group-item .text-muted,
+.list-group-item small {
+  color: #8898AA !important;
+  font-size: 0.98em !important;
+}
+/* Titlu centrat */
+h2 {
+  text-align: center;
+  margin-bottom: 28px;
+  color: white !important;
+  font-size: 2rem;
+  font-weight: 600;
+}

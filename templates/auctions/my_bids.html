@@ -1,4 +1,9 @@
 {% extends "main.html" %}
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'styles_bid.css' %}"> 
+{% endblock %}
+
 {% block title %}Bid-urile Mele{% endblock %}
 {% block content %}
   <h2>Bids plasate de tine</h2>
@@ -17,3 +22,8 @@
     <p>Nu ai plasat încă niciun bid.</p>
   {% endif %}
 {% endblock %}
+
+
+
+
+
