@@ -71,3 +71,10 @@ h2 {
   text-decoration: none;
   border-radius: 5px;
 }
+
+p {
+  text-align: center;
+  color: #fff !important;
+  font-size: 1.1rem;
+  margin-top: 20px;
+}
