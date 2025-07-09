@@ -1,8 +1,9 @@
 {% extends "main.html" %}
+{% load static %}
 
 {% block title %}Licitație: {{ auction.car.name }}{% endblock %}
 
-{% block content %}
+{% block content %}<link rel="stylesheet" href="{% static 'pagina_lic.css' %}">
   <h2>{{ auction.car.name }}</h2>
 
 {% if auction.car.images.all %}
