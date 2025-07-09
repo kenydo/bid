@@ -65,7 +65,7 @@ def place_bid(request, auction_id):
             latest_bid = existing_bids.first()
             min_bid = float(latest_bid.amount) + 0.01 if latest_bid else float(car.price)
         if amount < min_bid:
-            messages.error(request, f"Bid-ul minim este {min_bid} lei.")
+            messages.error(request, f"Bid-ul minim este {min_bid} euro.")
             return redirect('auction_detail', auction_id=auction.id)
         Bid.objects.create(auction=auction, car=car, user=request.user, amount=amount)
         messages.success(request, "Bid-ul tău a fost plasat!")
